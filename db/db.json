@@ -1,0 +1,166 @@
+{
+  "expenses": [
+    {
+      "title": "sinaks",
+      "price": 125,
+      "category": "food",
+      "date": "2026-04-30",
+      "id": 1
+    },
+    {
+      "title": "testkkk",
+      "price": 243,
+      "category": "shopping",
+      "date": "2026-05-29",
+      "id": 2
+    },
+    {
+      "title": "gift",
+      "price": 300,
+      "category": "others",
+      "date": "2026-05-22",
+      "id": 3
+    },
+    {
+      "title": "testing",
+      "price": 200,
+      "category": "testing",
+      "date": "2026-05-09",
+      "id": 4
+    },
+    {
+      "title": "petrol",
+      "price": 1500,
+      "category": "transport",
+      "date": "2026-05-01",
+      "id": 5
+    },
+    {
+      "title": "movie",
+      "price": 450,
+      "category": "entertainment",
+      "date": "2026-05-02",
+      "id": 6
+    },
+    {
+      "title": "groceries",
+      "price": 2200,
+      "category": "food",
+      "date": "2026-05-03",
+      "id": 7
+    },
+    {
+      "title": "electric bill",
+      "price": 1800,
+      "category": "bills",
+      "date": "2026-05-04",
+      "id": 8
+    },
+    {
+      "title": "internet recharge",
+      "price": 799,
+      "category": "bills",
+      "date": "2026-05-05",
+      "id": 9
+    },
+    {
+      "title": "shirt",
+      "price": 1200,
+      "category": "shopping",
+      "date": "2026-05-06",
+      "id": 10
+    },
+    {
+      "title": "coffee",
+      "price": 180,
+      "category": "food",
+      "date": "2026-05-07",
+      "id": 11
+    },
+    {
+      "title": "uber",
+      "price": 350,
+      "category": "transport",
+      "date": "2026-05-08",
+      "id": 12
+    },
+    {
+      "title": "notebook",
+      "price": 90,
+      "category": "education",
+      "date": "2026-05-10",
+      "id": 13
+    },
+    {
+      "title": "mobile recharge",
+      "price": 299,
+      "category": "bills",
+      "date": "2026-05-11",
+      "id": 14
+    },
+    {
+      "title": "headphones",
+      "price": 2500,
+      "category": "electronics",
+      "date": "2026-05-12",
+      "id": 15
+    },
+    {
+      "title": "medicine",
+      "price": 650,
+      "category": "health",
+      "date": "2026-05-13",
+      "id": 16
+    },
+    {
+      "title": "pizza",
+      "price": 700,
+      "category": "food",
+      "date": "2026-05-14",
+      "id": 17
+    },
+    {
+      "title": "gym fee",
+      "price": 1000,
+      "category": "fitness",
+      "date": "2026-05-15",
+      "id": 18
+    },
+    {
+      "title": "water bill",
+      "price": 400,
+      "category": "bills",
+      "date": "2026-05-16",
+      "id": 19
+    },
+    {
+      "title": "book",
+      "price": 550,
+      "category": "education",
+      "date": "2026-05-17",
+      "id": 20
+    }
+  ],
+  "category": [
+    {
+      "categoryName": "Food",
+      "categoryStatus": "Inactive",
+      "id": 2
+    },
+    {
+      "categoryName": "Bill Payment",
+      "categoryStatus": "Inactive",
+      "id": 5
+    },
+    {
+      "categoryName": "gymff",
+      "categoryStatus": "Active",
+      "id": 6
+    },
+    {
+      "categoryName": "gym pravwwn ",
+      "categoryStatus": "Active",
+      "id": 7
+    }
+  ]
+}
