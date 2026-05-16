@@ -4,9 +4,8 @@ import { deleteCategoryItem, fetchAllCategoryData, fetchCategoryItem } from '../
 import { Button } from '@material-tailwind/react';
 import toast from 'react-hot-toast';
 import CategoryForm from '../features/category/components/CategoryForm';
-import { handleCategoryModalOpen, handleCategoryModalClose, setCategorySearch } from '../features/category/categorySlice';
+import { handleCategoryModalOpen, handleCategoryModalClose } from '../features/category/categorySlice';
 import { useForm } from 'react-hook-form';
-import { categoryFilteredData } from '../features/category/categorySelector';
 import CustomPagination from '../components/pagination/CustomPagination';
 import CustomTable from '../components/customTable/CustomTable';
 
@@ -16,11 +15,8 @@ const ManageCategory = () => {
     const dispatch = useDispatch();
     const { register, watch } = useForm();
     const searchValue = watch('search')
-    const { error, loading, pagination } = useSelector((state) => state.category)
+    const { error, loading, pagination,data } = useSelector((state) => state.category)
     const { totalItem, totalPage, limit } = pagination
-
-    const filterData = useSelector(categoryFilteredData)
-
 
     // pagination 
     const [activePage, setActivePage] = useState(1)
@@ -29,10 +25,6 @@ const ManageCategory = () => {
         if (page > totalPage || activePage > totalPage) return;
         setActivePage(page)
     }
-
-    useEffect(() => {
-        dispatch(fetchAllCategoryData(activePage))
-    }, [dispatch, activePage])
 
     const handleDelete = (id) => {
         dispatch(deleteCategoryItem(id)).unwrap()
@@ -49,11 +41,11 @@ const ManageCategory = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-
-            dispatch(setCategorySearch(searchValue?.trim() || ''))
+            dispatch(fetchAllCategoryData({ page: activePage, search: searchValue }))
         }, 300)
         return () => clearTimeout(timer);
-    }, [searchValue, dispatch])
+    }, [searchValue, dispatch,activePage])
+
     const columns = [
         {
             header: 'ID',
@@ -97,7 +89,7 @@ const ManageCategory = () => {
             <CustomTable
                 columns={columns}
                 loading={loading}
-                data={filterData}
+                data={data}
             />
             {!loading && totalItem > limit && <CustomPagination
                 handlePageChange={handlePageChange}

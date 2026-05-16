@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchAllCategory, fetchCategory, postCategory, updateCategory, deleteCategory } from "../../services/category";
 
-export const fetchAllCategoryData = createAsyncThunk('category/fetchAllCategory', async (page, { rejectWithValue }) => {
+export const fetchAllCategoryData = createAsyncThunk('category/fetchAllCategory', async ({page,search}, { rejectWithValue }) => {
     try {
-        const res = await fetchAllCategory(page)
+        const res = await fetchAllCategory(page,search)
         return { data: res.data, totalItem: res.headers['x-total-count'] }
     } catch (error) {
         return rejectWithValue(error.message || "fetch failed")

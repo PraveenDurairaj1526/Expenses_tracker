@@ -12,9 +12,6 @@ const expensesSlice = createSlice({
         modalHandlers: {
             mode: 'ADD', show: false
         },
-        filters: {
-            search: ''
-        },
         pagination: {
             totalItem: null,
             totalPages: 0,
@@ -30,9 +27,6 @@ const expensesSlice = createSlice({
             state.modalHandlers.show = false
             state.modalHandlers.mode = 'ADD',
                 state.expensesItem = null
-        },
-        setSearch(state, action) {
-            state.filters.search = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -91,4 +85,4 @@ const expensesSlice = createSlice({
 })
 
 export default expensesSlice.reducer
-export const { setSearch, handleExpensesModalOpen, handleExpensesModalClose } = expensesSlice.actions;
+export const { handleExpensesModalOpen, handleExpensesModalClose } = expensesSlice.actions;

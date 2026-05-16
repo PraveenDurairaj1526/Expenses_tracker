@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { deleteExpenses, fetchExpenses, getExpenses, postExpenses, updateExpenses } from "../../services/expenses";
 
-export const fetchAllExpenses = createAsyncThunk('expenses/fetchAllExpenses', async (page, { rejectWithValue }) => {
+export const fetchAllExpenses = createAsyncThunk('expenses/fetchAllExpenses', async ({ page, search }, { rejectWithValue }) => {
     try {
-        const res = await fetchExpenses(page)
+        const res = await fetchExpenses(page, search)
         return { data: res.data, totalItem: res.headers['x-total-count'] }
     } catch (error) {
         return rejectWithValue("fetch failed")

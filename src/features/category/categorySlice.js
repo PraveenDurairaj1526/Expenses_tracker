@@ -14,9 +14,6 @@ const categorySlice = createSlice({
             mode: "ADD",
             show: false
         },
-        filterOptions: {
-            searchValue: ''
-        },
         pagination: {
             totalItem: null,
             totalPage: null,
@@ -32,9 +29,6 @@ const categorySlice = createSlice({
             state.modalHandlers.show = false,
                 state.categoryItemData = null,
                 state.modalHandlers.mode = "ADD"
-        },
-        setCategorySearch(state, action) {
-            state.filterOptions.searchValue = action.payload
         }
     },
     extraReducers: (builder) => {

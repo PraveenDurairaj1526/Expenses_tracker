@@ -31,7 +31,7 @@ const CustomTable = ({ columns, loading, data }) => {
                             ))}
                         </>
                     }
-                    {data?.length == 0 && <tr><td colSpan={12} className="text-center text-black text-2xl p-5">No Data</td></tr>}
+                    {data?.length == 0 && !loading && <tr><td colSpan={12} className="text-center text-black text-2xl p-5">No Data</td></tr>}
                 </tbody>
             </table>
         </div>

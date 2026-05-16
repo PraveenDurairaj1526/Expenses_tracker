@@ -3,8 +3,7 @@ import { Button, Card, Input, Typography, IconButton, ButtonGroup } from "@mater
 import { useDispatch, useSelector } from "react-redux";
 import { deleteExpensesItem, fetchAllExpenses, getExpensesItem } from "../features/expenses/expensesThunks";
 import { useForm } from "react-hook-form";
-import { selectFilteredExpenses } from "../features/expenses/expensesSelectors";
-import { handleExpensesModalOpen, setSearch } from "../features/expenses/expensesSlice";
+import { handleExpensesModalOpen } from "../features/expenses/expensesSlice";
 import ExpensesForm from "../features/expenses/components/ExpensesForm";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -14,9 +13,8 @@ import CustomTable from "../components/customTable/CustomTable";
 
 
 export default function ManageExpenses() {
-    const { loading, error, pagination } = useSelector((state) => state.expenses)
+    const { loading, error, pagination, data } = useSelector((state) => state.expenses)
     const { totalItem, totalPages, limit } = pagination
-    const filteredData = useSelector(selectFilteredExpenses)
     const dispatch = useDispatch()
     const { register, watch } = useForm()
     const searchValue = watch('search')
@@ -36,16 +34,13 @@ export default function ManageExpenses() {
     const handleAdd = () => {
         dispatch(handleExpensesModalOpen('ADD'))
     }
-    useEffect(() => {
-        dispatch(fetchAllExpenses(activePage))
-    }, [activePage, dispatch])
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            dispatch(setSearch(searchValue?.trim() || ""));
+            dispatch(fetchAllExpenses({ page: activePage, search: searchValue }));
         }, 300);
         return () => clearTimeout(timer);
-    }, [searchValue, dispatch])
+    }, [searchValue, dispatch, activePage])
 
     const columns = [
         {
@@ -99,7 +94,7 @@ export default function ManageExpenses() {
             <CustomTable
                 loading={loading}
                 columns={columns}
-                data={filteredData}
+                data={data}
             />
             {!loading && totalItem > limit &&
                 <CustomPagination

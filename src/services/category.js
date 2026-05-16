@@ -7,7 +7,7 @@ const API = axios.create({
     }
 })
 
-export const fetchAllCategory = (page) => API.get(`/?_page=${page}&_limit=${PAGINATION_COUNT}`);
+export const fetchAllCategory = (page,search) => API.get(`/?q=${search}&_page=${page}&_limit=${PAGINATION_COUNT}`);
 export const fetchCategory = (id) => API.get(`/${id}`);
 export const postCategory = (data) => API.post('/', data);
 export const updateCategory = (id, data) => API.put(`/${id}`, data);

@@ -8,7 +8,7 @@ const API = axios.create({
     }
 })
 
-export const fetchExpenses = (page) => API.get(`/?_page=${page}&_limit=${PAGINATION_COUNT}`)
+export const fetchExpenses = (page,search) => API.get(`/?q=${search}&_page=${page}&_limit=${PAGINATION_COUNT}`)
 export const getExpenses = (id) => API.get(`/${id}`)
 export const postExpenses = (data) => API.post(`/`, data)
 export const deleteExpenses = (id) => API.delete(`/${id}`)
