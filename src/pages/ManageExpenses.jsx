@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Input, Typography } from "@material-tailwind/react";
+import { Button, Card, Input, Typography, IconButton, ButtonGroup } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteExpensesItem, fetchAllExpenses, getExpensesItem } from "../features/expenses/expensesThunks";
 import { useForm } from "react-hook-form";
@@ -7,31 +7,38 @@ import { selectFilteredExpenses } from "../features/expenses/expensesSelectors";
 import { handleExpensesModalOpen, setSearch } from "../features/expenses/expensesSlice";
 import ExpensesForm from "../features/expenses/components/ExpensesForm";
 import toast from "react-hot-toast";
-
-const TABLE_HEAD = ["No", "Date", "Title", "Price", "Category", "Edit", "Delete"];
-
+import axios from "axios";
+import TableSkeleton from "../components/skeleton/TableSkeleton";
+import CustomPagination from "../components/pagination/CustomPagination";
+import CustomTable from "../components/customTable/CustomTable";
 
 
 export default function ManageExpenses() {
-    const { loading, error } = useSelector((state) => state.expenses)
+    const { loading, error, pagination } = useSelector((state) => state.expenses)
+    const { totalItem, totalPages, limit } = pagination
     const filteredData = useSelector(selectFilteredExpenses)
     const dispatch = useDispatch()
     const { register, watch } = useForm()
     const searchValue = watch('search')
 
+    // pagination
+    const [activePage, setActivePage] = useState(1);
+
+    const handlePageChange = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setActivePage(page)
+    }
+    // table curd
     const handleEdit = async (id) => {
-        await dispatch(getExpensesItem(id))
+        await dispatch(getExpensesItem(id)).unwrap()
         dispatch(handleExpensesModalOpen('EDIT'))
     }
     const handleAdd = () => {
         dispatch(handleExpensesModalOpen('ADD'))
     }
-
     useEffect(() => {
-        dispatch(fetchAllExpenses()).unwrap()
-            .then(() => toast.success('Expenses fetched'))
-            .catch(() => toast.error('Expenses fetch failed'))
-    }, [dispatch])
+        dispatch(fetchAllExpenses(activePage))
+    }, [activePage, dispatch])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -39,6 +46,42 @@ export default function ManageExpenses() {
         }, 300);
         return () => clearTimeout(timer);
     }, [searchValue, dispatch])
+
+    const columns = [
+        {
+            header: 'ID',
+            accessor: 'id'
+        },
+        {
+            header: 'Date',
+            accessor: 'date'
+        },
+        {
+            header: 'Title',
+            accessor: 'title'
+        },
+        {
+            header: 'Price',
+            accessor: 'price'
+        },
+
+        {
+            header: 'Category',
+            accessor: 'category'
+        },
+        {
+            header: 'Edit',
+            render: (row) => (
+                <Button size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize" onClick={() => handleEdit(row.id)}>Edit</Button>
+            )
+        },
+        {
+            header: 'Delete',
+            render: (row) => (
+                <Button size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize" onClick={() => dispatch(deleteExpensesItem(row.id))}>Delete</Button>
+            )
+        }
+    ]
 
     if (error) return <div>{error}</div>
     return (
@@ -53,40 +96,18 @@ export default function ManageExpenses() {
                 />
                 <Button onClick={handleAdd} className="bg-brand hover:bg-brand-dark text-white capitalize ms-auto">Add</Button>
             </div>
-            <div className="h-full w-full overflow-y-auto max-h-[500px] border border-gray-400 rounded-md">
-                <table className="w-full min-w-max table-auto text-left rounded-md">
-                    <thead>
-                        <tr>
-                            {TABLE_HEAD.map((head) => (
-                                <th key={head} className="leading-none font-medium text-black text-sm border-b border-gray-400  p-3 bg-amber-50 border-inherit">{head}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData?.length > 0 ?
-                            <>
-                                {filteredData?.map(({ date, title, price, category, id }, index) => (
-                                    <tr key={id} className="border-b border-gray-400 last:border-0">
-                                        <td className="p-4 text-sm">{index + 1}</td>
-                                        <td className="p-4 text-sm">{date}</td>
-                                        <td className="p-4 text-sm">{title}</td>
-                                        <td className="p-4 text-sm">{price}</td>
-                                        <td className="p-4 text-sm">{category}</td>
-                                        <td className="p-4">
-                                            <Button size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize" onClick={() => handleEdit(id)}>Edit</Button>
-                                        </td>
-                                        <td className="p-4">
-                                            <Button size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize" onClick={() => dispatch(deleteExpensesItem(id))}>Delete</Button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </> :
-                            <tr><td colSpan={12} className="text-center text-black text-2xl p-5">No Data</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+            <CustomTable
+                loading={loading}
+                columns={columns}
+                data={filteredData}
+            />
+            {!loading && totalItem > limit &&
+                <CustomPagination
+                    handlePageChange={handlePageChange}
+                    totalPages={totalPages}
+                    activePage={activePage}
+                />
+            }
         </div>
     );
 }

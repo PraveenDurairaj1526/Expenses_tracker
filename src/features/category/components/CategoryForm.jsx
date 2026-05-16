@@ -17,7 +17,7 @@ const CategoryForm = () => {
     const dispatch = useDispatch()
     const { register, handleSubmit, reset, formState: { errors }, control } = useForm();
     const handleForm = async (data) => {
-        if (mode == "ADD") {
+        if (mode === "ADD") {
             await dispatch(postCategoryItem(data)).unwrap()
                 .then(() => toast.success('Category is added'))
                 .catch(() => toast.error('category added failed'))
@@ -61,7 +61,7 @@ const CategoryForm = () => {
                     <Controller
                         name='categoryStatus'
                         control={control}
-                        defaultValue={'active'}
+                        defaultValue={'Active'}
                         render={({ field }) => (
                             <>
                                 <Select
@@ -74,7 +74,7 @@ const CategoryForm = () => {
                                 </Select>
                                 {errors.category && (
                                     <span className="text-red-500 text-sm">
-                                        {errors.category.message}
+                                        {errors.categoryStatus.message}
                                     </span>
                                 )}
                             </>

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAllExpenses, getExpensesItem, postExpensesItem, updateExpensesItem, deleteExpensesItem } from "./expensesThunks";
+import { PAGINATION_COUNT } from "../../siteConfig";
 
 const expensesSlice = createSlice({
     name: 'expensesSlice',
@@ -13,6 +14,11 @@ const expensesSlice = createSlice({
         },
         filters: {
             search: ''
+        },
+        pagination: {
+            totalItem: null,
+            totalPages: 0,
+            limit: PAGINATION_COUNT
         }
     },
     reducers: {
@@ -23,7 +29,7 @@ const expensesSlice = createSlice({
         handleExpensesModalClose(state, action) {
             state.modalHandlers.show = false
             state.modalHandlers.mode = 'ADD',
-            state.expensesItem = null
+                state.expensesItem = null
         },
         setSearch(state, action) {
             state.filters.search = action.payload;
@@ -37,7 +43,9 @@ const expensesSlice = createSlice({
         })
             .addCase(fetchAllExpenses.fulfilled, (state, action) => {
                 state.loading = false
-                state.data = action.payload
+                state.data = action.payload.data
+                state.pagination.totalItem = Number(action.payload.totalItem)
+                state.pagination.totalPages = Math.ceil(action.payload.totalItem / state.pagination.limit)
             })
             .addCase(fetchAllExpenses.rejected, (state, action) => {
                 state.loading = false

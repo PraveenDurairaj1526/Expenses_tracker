@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAllCategoryData, deleteCategoryItem, postCategoryItem, fetchCategoryItem, updateCategoryItem } from "./categoryThunks";
+import { PAGINATION_COUNT } from "../../siteConfig";
 
 
 const categorySlice = createSlice({
@@ -15,12 +16,17 @@ const categorySlice = createSlice({
         },
         filterOptions: {
             searchValue: ''
+        },
+        pagination: {
+            totalItem: null,
+            totalPage: null,
+            limit: PAGINATION_COUNT
         }
     },
     reducers: {
         handleCategoryModalOpen(state, action) {
             state.modalHandlers.show = true,
-            state.modalHandlers.mode = action.payload
+                state.modalHandlers.mode = action.payload
         },
         handleCategoryModalClose(state) {
             state.modalHandlers.show = false,
@@ -33,8 +39,10 @@ const categorySlice = createSlice({
     },
     extraReducers: (builder) => {
         // Fetch ALL CATEGORY
-        builder.addCase(fetchAllCategoryData.fulfilled, (state, action) => {
-            state.data = action.payload
+        builder.addCase(fetchAllCategoryData.fulfilled, (state, action) => { 
+            state.data = action.payload.data,
+            state.pagination.totalItem = Number(action.payload.totalItem),
+            state.pagination.totalPage = Math.ceil(action.payload.totalItem / state.pagination.limit)
             state.loading = false
         })
             .addCase(fetchAllCategoryData.pending, (state, action) => {

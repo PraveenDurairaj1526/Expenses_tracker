@@ -43,9 +43,19 @@ const ExpensesForm = () => {
 
     useEffect(() => {
         if (mode == "EDIT" && expensesItem) {
-            reset(expensesItem)
+            reset({
+                title:expensesItem?.title || '',
+                price:expensesItem?.price || '',
+                category:expensesItem?.category || '',
+                date:expensesItem?.date || ''
+            })
         }else{
-            reset({})
+            reset({
+                title:'',
+                price:'',
+                category: '',
+                date:''
+            })
         }
     }, [mode])
     return (

@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { deleteExpenses, fetchExpenses, getExpenses, postExpenses, updateExpenses } from "../../services/expenses";
 
-export const fetchAllExpenses = createAsyncThunk('expenses/fetchAllExpenses', async (_, { rejectWithValue }) => {
+export const fetchAllExpenses = createAsyncThunk('expenses/fetchAllExpenses', async (page, { rejectWithValue }) => {
     try {
-        const res = await fetchExpenses()
-        return res.data
+        const res = await fetchExpenses(page)
+        return { data: res.data, totalItem: res.headers['x-total-count'] }
     } catch (error) {
         return rejectWithValue("fetch failed")
     }
@@ -24,7 +24,7 @@ export const postExpensesItem = createAsyncThunk('expenses/postExpensesItem', as
         const res = await postExpenses(data)
         return res.data
     } catch (error) {
-       return rejectWithValue('Post failed')
+        return rejectWithValue('Post failed')
     }
 })
 
@@ -33,7 +33,7 @@ export const updateExpensesItem = createAsyncThunk('expenses/updateExpenses', as
         const res = await updateExpenses(id, data)
         return res.data
     } catch (error) {
-       return rejectWithValue('update failed')
+        return rejectWithValue('update failed')
     }
 })
 
@@ -42,6 +42,6 @@ export const deleteExpensesItem = createAsyncThunk('expenses/deleteExpenses', as
         const res = await deleteExpenses(id)
         return id
     } catch (error) {
-       return rejectWithValue('deleting failed')
+        return rejectWithValue('deleting failed')
     }
 })

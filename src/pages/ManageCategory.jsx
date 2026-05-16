@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteCategoryItem, fetchAllCategoryData, fetchCategoryItem } from '../features/category/categoryThunks';
 import { Button } from '@material-tailwind/react';
 import toast from 'react-hot-toast';
 import CategoryForm from '../features/category/components/CategoryForm';
-import { handleCategoryModalOpen,handleCategoryModalClose, setCategorySearch } from '../features/category/categorySlice';
+import { handleCategoryModalOpen, handleCategoryModalClose, setCategorySearch } from '../features/category/categorySlice';
 import { useForm } from 'react-hook-form';
 import { categoryFilteredData } from '../features/category/categorySelector';
+import CustomPagination from '../components/pagination/CustomPagination';
+import CustomTable from '../components/customTable/CustomTable';
 
 const TABLE_HEAD = ["No", "Category name", "Status", "Edit", "Delete"];
 
@@ -14,15 +16,23 @@ const ManageCategory = () => {
     const dispatch = useDispatch();
     const { register, watch } = useForm();
     const searchValue = watch('search')
-    const { error, loading } = useSelector((state) => state.category)
+    const { error, loading, pagination } = useSelector((state) => state.category)
+    const { totalItem, totalPage, limit } = pagination
 
     const filterData = useSelector(categoryFilteredData)
 
+
+    // pagination 
+    const [activePage, setActivePage] = useState(1)
+
+    const handlePageChange = (page) => {
+        if (page > totalPage || activePage > totalPage) return;
+        setActivePage(page)
+    }
+
     useEffect(() => {
-        dispatch(fetchAllCategoryData()).unwrap()
-            .then(() => toast.success("category List fetched"))
-            .catch(() => toast.error("fetch failed"))
-    }, [dispatch])
+        dispatch(fetchAllCategoryData(activePage))
+    }, [dispatch, activePage])
 
     const handleDelete = (id) => {
         dispatch(deleteCategoryItem(id)).unwrap()
@@ -36,7 +46,7 @@ const ManageCategory = () => {
         await dispatch(fetchCategoryItem(id)).unwrap()
             .then(() => dispatch(handleCategoryModalOpen("EDIT")))
     }
-    
+
     useEffect(() => {
         const timer = setTimeout(() => {
 
@@ -44,6 +54,33 @@ const ManageCategory = () => {
         }, 300)
         return () => clearTimeout(timer);
     }, [searchValue, dispatch])
+    const columns = [
+        {
+            header: 'ID',
+            accessor: 'id'
+        },
+        {
+            header: 'Category Name',
+            accessor: 'categoryName'
+        },
+        {
+            header: 'Status',
+            accessor: 'categoryStatus'
+        },
+        {
+            header: 'Edit',
+            render: (row) => (
+                <Button onClick={() => handleEdit(row.id)} size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize">Edit</Button>
+            )
+        },
+        {
+            header: 'Delete',
+            render: (row) => (
+                <Button onClick={() => handleDelete(row.id)} size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize">Delete</Button>
+            )
+        },
+
+    ]
 
     return (
         <div className="p-5">
@@ -57,37 +94,17 @@ const ManageCategory = () => {
                 />
                 <Button className="bg-brand hover:bg-brand-dark text-white capitalize ms-auto" onClick={() => handleCategoryAdd()}>Add</Button>
             </div>
-            <div className="h-full w-full overflow-y-auto max-h-[500px] border border-gray-400 rounded-md">
-                <table className="w-full min-w-max table-auto text-left rounded-md">
-                    <thead>
-                        <tr>
-                            {TABLE_HEAD.map((head) => (
-                                <th key={head} className="leading-none font-medium text-black text-sm border-b border-gray-400  p-3 bg-amber-50 border-inherit">{head}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filterData?.length > 0 ?
-                            <>
-                                {filterData?.map(({ categoryName, id, categoryStatus }, index) => (
-                                    <tr key={id} className="border-b border-gray-400 last:border-0">
-                                        <td className="p-4 text-sm">{index + 1}</td>
-                                        <td className="p-4 text-sm">{categoryName}</td>
-                                        <td className="p-4 text-sm">{categoryStatus}</td>
-                                        <td className="p-4">
-                                            <Button onClick={() => handleEdit(id)} size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize">Edit</Button>
-                                        </td>
-                                        <td className="p-4">
-                                            <Button onClick={() => handleDelete(id)} size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize">Delete</Button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </> :
-                            <tr><td colSpan={12} className="text-center text-black text-2xl p-5">No Data</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+            <CustomTable
+                columns={columns}
+                loading={loading}
+                data={filterData}
+            />
+            {!loading && totalItem > limit && <CustomPagination
+                handlePageChange={handlePageChange}
+                activePage={activePage}
+                totalPages={totalPage}
+            />}
+
         </div>
     )
 }

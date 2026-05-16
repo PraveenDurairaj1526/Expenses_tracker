@@ -22,13 +22,6 @@
       "id": 3
     },
     {
-      "title": "testing",
-      "price": 200,
-      "category": "testing",
-      "date": "2026-05-09",
-      "id": 4
-    },
-    {
       "title": "petrol",
       "price": 1500,
       "category": "transport",
@@ -36,7 +29,7 @@
       "id": 5
     },
     {
-      "title": "movie",
+      "title": "movietest",
       "price": 450,
       "category": "entertainment",
       "date": "2026-05-02",
@@ -58,7 +51,7 @@
     },
     {
       "title": "internet recharge",
-      "price": 799,
+      "price": 300,
       "category": "bills",
       "date": "2026-05-05",
       "id": 9
@@ -71,14 +64,14 @@
       "id": 10
     },
     {
-      "title": "coffee",
+      "title": "coffee2",
       "price": 180,
       "category": "food",
       "date": "2026-05-07",
       "id": 11
     },
     {
-      "title": "uber",
+      "title": "ubertest",
       "price": 350,
       "category": "transport",
       "date": "2026-05-08",
@@ -144,23 +137,53 @@
   "category": [
     {
       "categoryName": "Food",
-      "categoryStatus": "Inactive",
-      "id": 2
+      "categoryStatus": "Active",
+      "id": 1
     },
     {
       "categoryName": "Bill Payment",
-      "categoryStatus": "Inactive",
+      "categoryStatus": "Active",
+      "id": 2
+    },
+    {
+      "categoryName": "Gym",
+      "categoryStatus": "Active",
+      "id": 3
+    },
+    {
+      "categoryName": "Recharge",
+      "categoryStatus": "Active",
+      "id": 4
+    },
+    {
+      "categoryName": "Travel",
+      "categoryStatus": "Active",
       "id": 5
     },
     {
-      "categoryName": "gymff",
-      "categoryStatus": "Active",
+      "categoryName": "Shopping",
+      "categoryStatus": "Inactive",
       "id": 6
     },
     {
-      "categoryName": "gym pravwwn ",
+      "categoryName": "Entertainment",
       "categoryStatus": "Active",
       "id": 7
+    },
+    {
+      "categoryName": "Medical",
+      "categoryStatus": "Active",
+      "id": 8
+    },
+    {
+      "categoryName": "Education",
+      "categoryStatus": "Inactive",
+      "id": 9
+    },
+    {
+      "categoryName": "Rent",
+      "categoryStatus": "Active",
+      "id": 10
     }
   ]
 }
