@@ -12,7 +12,7 @@ const TableSkeleton = ({titleLength}) => {
                                 Array.from({ length: titleLength },
                                     (_, index) => (
                                         <td key={index + 1} className="animate-pulse p-2 text-sm">
-                                            <div className='h-[32px]  w-[80px] rounded-md bg-gray-300' />
+                                            <span className='h-[28px]  w-[80px] rounded-md bg-gray-300 inline-block' />
                                         </td>
                                     )
                                 )

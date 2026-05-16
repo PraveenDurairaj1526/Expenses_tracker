@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchAllCategory, fetchCategory, postCategory, updateCategory, deleteCategory } from "../../services/category";
+import { fetchTableCategory, fetchCategory, postCategory, updateCategory, deleteCategory, fetchAllCategory } from "../../services/category";
 
-export const fetchAllCategoryData = createAsyncThunk('category/fetchAllCategory', async ({page,search}, { rejectWithValue }) => {
+export const fetchTableCategoryData = createAsyncThunk('category/fetchTableCategory', async ({ page, search }, { rejectWithValue }) => {
     try {
-        const res = await fetchAllCategory(page,search)
+        const res = await fetchTableCategory(page, search)
         return { data: res.data, totalItem: res.headers['x-total-count'] }
     } catch (error) {
         return rejectWithValue(error.message || "fetch failed")
@@ -43,5 +43,14 @@ export const deleteCategoryItem = createAsyncThunk('category/deleteCategory', as
         return id
     } catch (error) {
         return rejectWithValue(error.message || 'delete failed')
+    }
+})
+
+export const fetchAllCategoryData = createAsyncThunk('category/fetchAllCategory', async (_, { rejectWithValue }) => {
+    try {
+        const res = await fetchAllCategory()
+        return res.data
+    } catch (error) {
+        return rejectWithValue(error.message || 'fetch failed')
     }
 })

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteCategoryItem, fetchAllCategoryData, fetchCategoryItem } from '../features/category/categoryThunks';
+import { deleteCategoryItem, fetchCategoryItem, fetchTableCategoryData } from '../features/category/categoryThunks';
 import { Button } from '@material-tailwind/react';
 import toast from 'react-hot-toast';
 import CategoryForm from '../features/category/components/CategoryForm';
@@ -8,8 +8,6 @@ import { handleCategoryModalOpen, handleCategoryModalClose } from '../features/c
 import { useForm } from 'react-hook-form';
 import CustomPagination from '../components/pagination/CustomPagination';
 import CustomTable from '../components/customTable/CustomTable';
-
-const TABLE_HEAD = ["No", "Category name", "Status", "Edit", "Delete"];
 
 const ManageCategory = () => {
     const dispatch = useDispatch();
@@ -41,7 +39,7 @@ const ManageCategory = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            dispatch(fetchAllCategoryData({ page: activePage, search: searchValue }))
+            dispatch(fetchTableCategoryData({ page: activePage, search: searchValue }))
         }, 300)
         return () => clearTimeout(timer);
     }, [searchValue, dispatch,activePage])
@@ -91,6 +89,7 @@ const ManageCategory = () => {
                 loading={loading}
                 data={data}
             />
+            
             {!loading && totalItem > limit && <CustomPagination
                 handlePageChange={handlePageChange}
                 activePage={activePage}

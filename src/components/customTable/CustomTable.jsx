@@ -9,7 +9,7 @@ const CustomTable = ({ columns, loading, data }) => {
                 <thead className="sticky top-0">
                     <tr>
                         {columns.map(({ header }) => (
-                            <th key={header} className="leading-none font-medium text-black text-sm border-b border-gray-400  py-3 px-2 bg-amber-50 border-inherit">{header}
+                            <th key={header} className="leading-none font-medium text-black text-sm border-b border-gray-400  py-3 px-2 bg-amber-50 border-inherit min-w-[120px]">{header}
                             </th>
                         ))}
                     </tr>

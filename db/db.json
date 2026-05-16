@@ -3,35 +3,28 @@
     {
       "title": "sinaks",
       "price": 125,
-      "category": "food",
+      "category": "Food",
       "date": "2026-04-30",
       "id": 1
     },
     {
-      "title": "testkkk",
-      "price": 243,
-      "category": "shopping",
-      "date": "2026-05-29",
-      "id": 2
-    },
-    {
       "title": "gift",
       "price": 300,
-      "category": "others",
+      "category": "Others",
       "date": "2026-05-22",
       "id": 3
     },
     {
       "title": "petrol",
       "price": 1500,
-      "category": "transport",
+      "category": "Bill Payment",
       "date": "2026-05-01",
       "id": 5
     },
     {
       "title": "movietest",
       "price": 450,
-      "category": "entertainment",
+      "category": "Entertainment",
       "date": "2026-05-02",
       "id": 6
     },
@@ -45,91 +38,56 @@
     {
       "title": "electric bill",
       "price": 1800,
-      "category": "bills",
+      "category": "Bill Payment",
       "date": "2026-05-04",
       "id": 8
     },
     {
       "title": "internet recharge",
       "price": 300,
-      "category": "bills",
+      "category": "Bill Payment",
       "date": "2026-05-05",
       "id": 9
     },
     {
       "title": "shirt",
       "price": 1200,
-      "category": "shopping",
+      "category": "Shopping",
       "date": "2026-05-06",
       "id": 10
     },
     {
       "title": "coffee2",
       "price": 180,
-      "category": "food",
+      "category": "Food",
       "date": "2026-05-07",
       "id": 11
     },
     {
       "title": "ubertest",
       "price": 350,
-      "category": "transport",
+      "category": "Others",
       "date": "2026-05-08",
       "id": 12
     },
     {
-      "title": "notebook",
-      "price": 90,
-      "category": "education",
-      "date": "2026-05-10",
-      "id": 13
-    },
-    {
-      "title": "mobile recharge",
-      "price": 299,
-      "category": "bills",
-      "date": "2026-05-11",
-      "id": 14
-    },
-    {
-      "title": "headphones",
-      "price": 2500,
-      "category": "electronics",
-      "date": "2026-05-12",
-      "id": 15
-    },
-    {
-      "title": "medicine",
-      "price": 650,
-      "category": "health",
-      "date": "2026-05-13",
-      "id": 16
-    },
-    {
-      "title": "pizza",
-      "price": 700,
-      "category": "food",
-      "date": "2026-05-14",
-      "id": 17
-    },
-    {
       "title": "gym fee",
       "price": 1000,
-      "category": "fitness",
+      "category": "Gym",
       "date": "2026-05-15",
       "id": 18
     },
     {
       "title": "water bill",
       "price": 400,
-      "category": "bills",
+      "category": "Bill Payment",
       "date": "2026-05-16",
       "id": 19
     },
     {
       "title": "book",
       "price": 550,
-      "category": "education",
+      "category": "Education",
       "date": "2026-05-17",
       "id": 20
     }
@@ -157,12 +115,12 @@
     },
     {
       "categoryName": "Travel",
-      "categoryStatus": "Active",
+      "categoryStatus": "Inactive",
       "id": 5
     },
     {
       "categoryName": "Shopping",
-      "categoryStatus": "Inactive",
+      "categoryStatus": "Active",
       "id": 6
     },
     {
@@ -177,13 +135,18 @@
     },
     {
       "categoryName": "Education",
-      "categoryStatus": "Inactive",
+      "categoryStatus": "Active",
       "id": 9
     },
     {
       "categoryName": "Rent",
       "categoryStatus": "Active",
       "id": 10
+    },
+    {
+      "categoryName": "Others",
+      "categoryStatus": "Active",
+      "id": 11
     }
   ]
 }

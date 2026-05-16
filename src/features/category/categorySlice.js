@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllCategoryData, deleteCategoryItem, postCategoryItem, fetchCategoryItem, updateCategoryItem } from "./categoryThunks";
+import { fetchTableCategoryData, deleteCategoryItem, postCategoryItem, fetchCategoryItem, updateCategoryItem, fetchAllCategoryData } from "./categoryThunks";
 import { PAGINATION_COUNT } from "../../siteConfig";
 
 
@@ -10,6 +10,7 @@ const categorySlice = createSlice({
         data: [],
         error: null,
         categoryItemData: null,
+        categoryOptionData: [],
         modalHandlers: {
             mode: "ADD",
             show: false
@@ -32,19 +33,25 @@ const categorySlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        // Fetch ALL CATEGORY
-        builder.addCase(fetchAllCategoryData.fulfilled, (state, action) => { 
+        // Fetch table CATEGORY
+        builder.addCase(fetchTableCategoryData.fulfilled, (state, action) => {
             state.data = action.payload.data,
-            state.pagination.totalItem = Number(action.payload.totalItem),
-            state.pagination.totalPage = Math.ceil(action.payload.totalItem / state.pagination.limit)
+                state.pagination.totalItem = Number(action.payload.totalItem),
+                state.pagination.totalPage = Math.ceil(action.payload.totalItem / state.pagination.limit)
             state.loading = false
         })
-            .addCase(fetchAllCategoryData.pending, (state, action) => {
+            .addCase(fetchTableCategoryData.pending, (state, action) => {
                 state.loading = true
             })
-            .addCase(fetchAllCategoryData.rejected, (state, action) => {
+            .addCase(fetchTableCategoryData.rejected, (state, action) => {
                 state.loading = false
                 state.error = 'fetch failed'
+            })
+            .addCase(fetchAllCategoryData.fulfilled, (state, action) => {
+                state.categoryOptionData = action.payload
+            })
+            .addCase(fetchAllCategoryData.rejected, (state, action) => {
+                state.error = action.payload
             })
             //FETCH ITEM
             .addCase(fetchCategoryItem.fulfilled, (state, action) => {

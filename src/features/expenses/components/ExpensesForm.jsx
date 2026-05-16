@@ -11,11 +11,13 @@ import { postExpensesItem, updateExpensesItem } from '../expensesThunks';
 import z from 'zod';
 import { handleExpensesModalClose } from '../expensesSlice';
 import toast from 'react-hot-toast';
+import { fetchAllCategoryData } from '../../category/categoryThunks';
 
 const ExpensesForm = () => {
     const dispatch = useDispatch()
     const { show, mode } = useSelector((state) => state.expenses.modalHandlers);
     const { expensesItem } = useSelector((state) => state.expenses);
+    const { categoryOptionData } = useSelector((state) => state.category)
     const schema = z.object({
         title: z.string().min(1, 'Title is required'),
         price: z.coerce.number().min(1, 'Price must be greater than 0'),
@@ -23,7 +25,7 @@ const ExpensesForm = () => {
         date: z.string().min(1, 'Date is required')
     })
 
-    const { register, handleSubmit, formState: { errors }, reset } =
+    const { register, handleSubmit, formState: { errors }, reset, control } =
         useForm({ resolver: zodResolver(schema) });
 
     const handleForm = async (data) => {
@@ -44,20 +46,24 @@ const ExpensesForm = () => {
     useEffect(() => {
         if (mode == "EDIT" && expensesItem) {
             reset({
-                title:expensesItem?.title || '',
-                price:expensesItem?.price || '',
-                category:expensesItem?.category || '',
-                date:expensesItem?.date || ''
+                title: expensesItem?.title || '',
+                price: expensesItem?.price || '',
+                category: expensesItem?.category || 'select',
+                date: expensesItem?.date || ''
             })
-        }else{
+        } else {
             reset({
-                title:'',
-                price:'',
-                category: '',
-                date:''
+                title: '',
+                price: '',
+                category: 'select',
+                date: ''
             })
         }
+        dispatch(fetchAllCategoryData())
+
     }, [mode])
+
+
     return (
         <Dialog open={show} handler={() => dispatch(handleExpensesModalClose())}>
             <DialogHeader className="justify-between">
@@ -99,18 +105,17 @@ const ExpensesForm = () => {
                     </div>
                     <div>
                         <label>Category</label>
-                        <Input
+                        <Controller
                             name='category'
-                            size="lg"
-                            placeholder="name@mail.com"
-                            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                            labelProps={{
-                                className: "before:content-none after:content-none",
-                            }}
-                            error={!!errors?.category}
-                            {...register('category')}
+                            control={control}
+                            defaultValue={'select'}
+                            render={({ field }) => (
+                                <select value={field.value} onChange={field.onChange}>
+                                    <option value={'select'}>select</option>
+                                    {categoryOptionData?.map(({ categoryName, categoryStatus },key) => categoryStatus == 'Active' && <option key={key} value={categoryName}>{categoryName}</option>)}
+                                </select>
+                            )}
                         />
-                        {errors?.category?.message && <span className='text-red-600 text-xs'>{errors?.category?.message}</span>}
                     </div>
                     <div>
                         <label>Date</label>

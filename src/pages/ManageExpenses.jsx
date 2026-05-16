@@ -10,6 +10,7 @@ import axios from "axios";
 import TableSkeleton from "../components/skeleton/TableSkeleton";
 import CustomPagination from "../components/pagination/CustomPagination";
 import CustomTable from "../components/customTable/CustomTable";
+import Layout from "../components/Layout/Layout";
 
 
 export default function ManageExpenses() {
@@ -80,29 +81,31 @@ export default function ManageExpenses() {
 
     if (error) return <div>{error}</div>
     return (
-        <div className="p-5">
-            <ExpensesForm />
-            <h1 className="text-xl mb-5 font-semibold">Manage Expenses</h1>
-            <div className="flex justify-between mb-3 flex-wrap gap-5">
-                <input
-                    {...register("search")}
-                    placeholder="Search by title"
-                    className="border border-gray-300 rounded-md px-3 py-2 w-full max-w-[250px] text-sm"
+        <Layout>
+            <div>
+                <ExpensesForm />
+                <h1 className="text-xl mb-5 font-semibold">Manage Expenses</h1>
+                <div className="flex justify-between mb-3 flex-wrap gap-5">
+                    <input
+                        {...register("search")}
+                        placeholder="Search by title"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-full max-w-[250px] text-sm"
+                    />
+                    <Button onClick={handleAdd} className="bg-brand hover:bg-brand-dark text-white capitalize ms-auto">Add</Button>
+                </div>
+                <CustomTable
+                    loading={loading}
+                    columns={columns}
+                    data={data}
                 />
-                <Button onClick={handleAdd} className="bg-brand hover:bg-brand-dark text-white capitalize ms-auto">Add</Button>
+                {!loading && totalItem > limit &&
+                    <CustomPagination
+                        handlePageChange={handlePageChange}
+                        totalPages={totalPages}
+                        activePage={activePage}
+                    />
+                }
             </div>
-            <CustomTable
-                loading={loading}
-                columns={columns}
-                data={data}
-            />
-            {!loading && totalItem > limit &&
-                <CustomPagination
-                    handlePageChange={handlePageChange}
-                    totalPages={totalPages}
-                    activePage={activePage}
-                />
-            }
-        </div>
+        </Layout>
     );
 }

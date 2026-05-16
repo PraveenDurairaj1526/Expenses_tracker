@@ -9,13 +9,15 @@ module.exports = withMT({
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Manrope', 'sans-serif'],
       },
       colors: {
         brand: {
           DEFAULT: "#a08c09",
           dark: "#8a7808",
         },
+        primary: "#0C1014",
+        secondary: "#44474A",
       },
     },
   },
