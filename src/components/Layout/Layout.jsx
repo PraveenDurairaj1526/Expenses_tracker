@@ -5,7 +5,7 @@ import Navigation from './Navigation'
 const Layout = ({ children }) => {
   return (
     <div className='flex flex-col'>
-      <div>
+      <div className='px-4 py-4 md:px-6 headerWrapper'>
         <Header />
         <Navigation />
       </div>

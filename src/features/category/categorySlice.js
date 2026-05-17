@@ -47,6 +47,7 @@ const categorySlice = createSlice({
                 state.loading = false
                 state.error = 'fetch failed'
             })
+            // fetch all Item
             .addCase(fetchAllCategoryData.fulfilled, (state, action) => {
                 state.categoryOptionData = action.payload
             })

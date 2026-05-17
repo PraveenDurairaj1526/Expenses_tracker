@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
   const linkData = [
@@ -17,19 +17,17 @@ const Navigation = () => {
       link: '/manage-category'
     }
   ]
-  const active = 'before:absolute before:left-1/2 before:-translate-x-1/2 before:-bottom-[8px] before:h-[4px] before:w-1/2 before:bg-primary before:content-[" "] before:rounded-lg text-primary font-bold';
+  const active = 'bg-black text-white';
 
   return (
-    <div className='px-4 py-4 pt-2 md:px-6 bg-[#FAF9F9] border-b border-[#c5c6ca78] whitespace-nowrap overflow-x-auto custom-scroll'>
-      <div className='flex gap-8'>{linkData?.map(({ heading, link }) => <NavLink to={link}
+      <div className='inline-flex items-center rounded-3xl bg-white p-1 whitespace-nowrap overflow-x-auto custom-scroll min-w-0 max-w-full'>{linkData?.map(({ heading, link }) => <NavLink to={link}
         className={({ isActive }) =>
           clsx(
-            'text-sm text-secondary relative',
+            'rounded-3xl px-4 py-2 text-xs font-semibold text-primary md:text-sm',
             isActive && active
           )
         }
       >{heading}</NavLink>)}</div>
-    </div>
   )
 }
 

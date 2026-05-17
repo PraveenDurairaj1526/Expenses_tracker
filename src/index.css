@@ -6,6 +6,7 @@
 body {
   font-family: 'Manrope', sans-serif;
 }
+
 .custom-scroll::-webkit-scrollbar {
   width: 6px;
   height: 3px;
@@ -18,4 +19,25 @@ body {
 .custom-scroll::-webkit-scrollbar-thumb {
   background: #FED56B;
   border-radius: 9999px;
+}
+
+.headerWrapper {
+  position: relative;
+  background: radial-gradient(at left bottom, #fefcf8, #efe2b4);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.headerWrapper::before {
+  background: linear-gradient(180deg, #cbd431, rgb(234 255 17 / 46%));
+  border-radius: 50%;
+  bottom: -28px;
+  content: "";
+  filter: blur(100px);
+  height: 200px;
+  left: auto;
+  position: absolute;
+  width: 200px;
+  will-change: transform;
+  z-index: -1;
 }
