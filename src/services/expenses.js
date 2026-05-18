@@ -1,14 +1,14 @@
 import axios from "axios";
-import { PAGINATION_COUNT } from "../siteConfig";
+import { API_BASE_URL, PAGINATION_COUNT } from "../siteConfig";
 
 const API = axios.create({
-    baseURL: 'http://localhost:4000/expenses',
+    baseURL: `${API_BASE_URL}/expenses`,
     headers: {
         "Content-Type": "application/json"
     }
 })
 
-export const fetchExpenses = (page,search) => API.get(`/?q=${search}&_page=${page}&_limit=${PAGINATION_COUNT}`)
+export const fetchExpenses = (page, search) => API.get(`/?q=${search}&_page=${page}&_limit=${PAGINATION_COUNT}`)
 export const getExpenses = (id) => API.get(`/${id}`)
 export const postExpenses = (data) => API.post(`/`, data)
 export const deleteExpenses = (id) => API.delete(`/${id}`)

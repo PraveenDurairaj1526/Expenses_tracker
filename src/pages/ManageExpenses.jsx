@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteExpensesItem, fetchAllExpenses, getExpensesItem } from "../features/expenses/expensesThunks";
 import { useForm } from "react-hook-form";
 import { handleExpensesModalOpen } from "../features/expenses/expensesSlice";
-import ExpensesForm from "../features/expenses/components/ExpensesForm";
 import toast from "react-hot-toast";
 import axios from "axios";
 import TableSkeleton from "../components/skeleton/TableSkeleton";
 import CustomPagination from "../components/pagination/CustomPagination";
 import CustomTable from "../components/customTable/CustomTable";
 import Layout from "../components/Layout/Layout";
+import { DeleteIcon, EditIcon } from "../assets/CustomSvgIcons";
 
 
 export default function ManageExpenses() {
@@ -68,13 +68,13 @@ export default function ManageExpenses() {
         {
             header: 'Edit',
             render: (row) => (
-                <Button size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize" onClick={() => handleEdit(row.id)}>Edit</Button>
+                <div tabIndex={1} role="button" size='sm' className="text-blue-800 capitalize inline-block" onClick={() => handleEdit(row.id)}><EditIcon/></div>
             )
         },
         {
             header: 'Delete',
             render: (row) => (
-                <Button size='sm' className="bg-brand hover:bg-brand-dark text-white capitalize" onClick={() => dispatch(deleteExpensesItem(row.id))}>Delete</Button>
+                <div size='sm' className=" text-red-800 capitalize inline-block" tabIndex={1} role="button" onClick={() => dispatch(deleteExpensesItem(row.id))}><DeleteIcon/></div>
             )
         }
     ]
@@ -83,7 +83,6 @@ export default function ManageExpenses() {
     return (
         <Layout>
             <div>
-                <ExpensesForm />
                 <h1 className="text-xl mb-5 font-semibold">Manage Expenses</h1>
                 <div className="flex justify-between mb-3 flex-wrap gap-5">
                     <input

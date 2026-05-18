@@ -76,8 +76,8 @@ const CategoryExpenseChart = () => {
                 </div>
             </div>
 
-            <div className='mt-2 grid lg:grid-cols-2 gap-4'>
-                {data?.map((item) => (
+            <div className='mt-2 grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-4'>
+                {data?.slice(0,2)?.map((item) => (
                     <div key={item.name} className='flex items-center justify-between rounded-2xl bg-background_light_100 px-4 py-3'>
                         <div className='flex items-center gap-3'>
                             <span className='h-3 w-3 rounded-full' style={{ backgroundColor: item.color }} />

@@ -9,7 +9,7 @@ const CustomTable = ({ columns, loading, data }) => {
                 <thead className="sticky top-0">
                     <tr>
                         {columns.map(({ header }) => (
-                            <th key={header} className="leading-none font-medium text-black text-sm border-b border-gray-400  py-3 px-2 bg-amber-50 border-inherit min-w-[120px]">{header}
+                            <th key={header} className="leading-none font-medium text-white text-sm border-b border-gray-400  py-3 px-2 bg-brand border-inherit min-w-[120px]">{header}
                             </th>
                         ))}
                     </tr>
@@ -19,7 +19,7 @@ const CustomTable = ({ columns, loading, data }) => {
                     {!loading && data?.length > 0 &&
                         <>
                             {data?.map((row, index) => (
-                                <tr key={index} className="border-b border-gray-400 last:border-0">
+                                <tr key={index} className="border-b border-gray-400 last:border-0 bg-white">
                                     {columns?.map(({ accessor, render },key) => {
                                         return (
                                             <td className="p-2 text-sm" key={key}>

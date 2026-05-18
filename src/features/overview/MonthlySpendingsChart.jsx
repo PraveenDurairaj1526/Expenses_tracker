@@ -9,6 +9,7 @@ import {
 
 import { Bar } from 'react-chartjs-2'
 import { color } from 'chart.js/helpers'
+import { ResponsiveContainer } from 'recharts'
 
 ChartJS.register(
     CategoryScale,
@@ -112,7 +113,7 @@ const MonthlySpendingChart = () => {
     }
 
     return (
-        <div className='rounded-[32px] border-2 border-border_primary bg-background_light_200 p-4 md:p-6 flex flex-col justify-between'>
+        <div className='rounded-[32px] border-2 border-border_primary bg-background_light_200 p-4 md:p-6 flex flex-col justify-between min-w-0'>
             <div className='mb-6 flex items-center justify-between flex-wrap gap-3'>
                 <div>
                     <h3 className='mb-2 text-[16px] font-bold text-primary md:text-[20px]'> Monthly Spending</h3>
@@ -123,8 +124,8 @@ const MonthlySpendingChart = () => {
                     <button className={clsx('rounded-3xl px-4 py-2 text-xs font-bold md:text-sm', tabActive)}> Weekly</button>
                 </div>
             </div>
-            <div className='h-[180px] md:h-[220px]'>
-                <Bar data={data} options={options} />
+            <div className='h-[180px] md:h-[220px] w-full min-w-0 overflow-hidden'>
+                    <Bar data={data} options={options} />
             </div>
         </div>
     )

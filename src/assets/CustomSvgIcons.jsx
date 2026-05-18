@@ -20,3 +20,75 @@ export const PlusIcon = ({ className }) => {
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" className={className}><rect x="10.2063" y="1" width="1.5873" height="20" rx="0.793651" fill="currentColor" stroke="currentColor" strokeWidth="0.2"></rect><rect x="1" y="11.7939" width="1.5873" height="20" rx="0.793651" transform="rotate(-90 1 11.7939)" fill="currentColor" stroke="currentColor" strokeWidth="0.2"></rect></svg>
     )
 }
+
+export const EditIcon = ({ size = 20, className = '' }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14.06 4.94L17.81 8.69"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+export const DeleteIcon = ({ size = 20, className = '' }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M4 7H20"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 11V17"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M14 11V17"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M5 7L6 19C6.1 20 6.9 21 8 21H16C17.1 21 17.9 20 18 19L19 7"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 7V4C9 3.45 9.45 3 10 3H14C14.55 3 15 3.45 15 4V7"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}

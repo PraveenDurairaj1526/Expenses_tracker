@@ -1,7 +1,7 @@
 import axios from "axios";
-import { PAGINATION_COUNT } from "../siteConfig";
+import { API_BASE_URL, PAGINATION_COUNT } from "../siteConfig";
 const API = axios.create({
-    baseURL: 'http://localhost:4000/category',
+    baseURL: `${API_BASE_URL}/category`,
     headers: {
         "Content-Type": 'application/json'
     }
