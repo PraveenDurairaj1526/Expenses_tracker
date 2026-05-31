@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Input, Typography, IconButton, ButtonGroup } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteExpensesItem, fetchAllExpenses, getExpensesItem } from "../features/expenses/expensesThunks";
+import { deleteExpensesItem, fetchExpensesData, getExpensesItem } from "../features/expenses/expensesThunks";
 import { useForm } from "react-hook-form";
 import { handleExpensesModalOpen } from "../features/expenses/expensesSlice";
 import toast from "react-hot-toast";
@@ -11,10 +11,11 @@ import CustomPagination from "../components/pagination/CustomPagination";
 import CustomTable from "../components/customTable/CustomTable";
 import Layout from "../components/Layout/Layout";
 import { DeleteIcon, EditIcon } from "../assets/CustomSvgIcons";
+import ExpensesCard from "../features/expenses/components/ExpensesCard";
 
 
 export default function ManageExpenses() {
-    const { loading, error, pagination, data } = useSelector((state) => state.expenses)
+    const { loading, error, pagination, data, allExpenses } = useSelector((state) => state.expenses)
     const { totalItem, totalPages, limit } = pagination
     const dispatch = useDispatch()
     const { register, watch } = useForm()
@@ -38,7 +39,7 @@ export default function ManageExpenses() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            dispatch(fetchAllExpenses({ page: activePage, search: searchValue }));
+            dispatch(fetchExpensesData({ page: activePage, search: searchValue }));
         }, 300);
         return () => clearTimeout(timer);
     }, [searchValue, dispatch, activePage])
@@ -63,18 +64,23 @@ export default function ManageExpenses() {
 
         {
             header: 'Category',
-            accessor: 'category'
+            render: (row) => (
+                <div className='flex gap-2 items-center'>
+                    <div className='w-5 h-5 rounded' style={{ background: row?.categoryColor }} />
+                    <div>{row?.category}</div>
+                </div>
+            )
         },
         {
             header: 'Edit',
             render: (row) => (
-                <div tabIndex={1} role="button" size='sm' className="text-blue-800 capitalize inline-block" onClick={() => handleEdit(row.id)}><EditIcon/></div>
+                <div tabIndex={1} role="button" size='sm' className="text-blue-800 capitalize inline-block" onClick={() => handleEdit(row.id)}><EditIcon /></div>
             )
         },
         {
             header: 'Delete',
             render: (row) => (
-                <div size='sm' className=" text-red-800 capitalize inline-block" tabIndex={1} role="button" onClick={() => dispatch(deleteExpensesItem(row.id))}><DeleteIcon/></div>
+                <div size='sm' className=" text-red-800 capitalize inline-block" tabIndex={1} role="button" onClick={() => dispatch(deleteExpensesItem(row.id))}><DeleteIcon /></div>
             )
         }
     ]
@@ -92,11 +98,13 @@ export default function ManageExpenses() {
                     />
                     <Button onClick={handleAdd} className="bg-brand hover:bg-brand-dark text-white capitalize ms-auto">Add</Button>
                 </div>
+                
                 <CustomTable
                     loading={loading}
                     columns={columns}
                     data={data}
                 />
+
                 {!loading && totalItem > limit &&
                     <CustomPagination
                         handlePageChange={handlePageChange}

@@ -9,12 +9,14 @@ import { useForm } from 'react-hook-form';
 import CustomPagination from '../components/pagination/CustomPagination';
 import CustomTable from '../components/customTable/CustomTable';
 import Layout from "../components/Layout/Layout";
+import ExpensesCard from '../features/expenses/components/ExpensesCard';
 
 const ManageCategory = () => {
     const dispatch = useDispatch();
     const { register, watch } = useForm();
     const searchValue = watch('search')
     const { error, loading, pagination, data } = useSelector((state) => state.category)
+    const { allExpenses } = useSelector((state) => state.expenses)
     const { totalItem, totalPage, limit } = pagination
 
     // pagination 
@@ -45,6 +47,20 @@ const ManageCategory = () => {
         return () => clearTimeout(timer);
     }, [searchValue, dispatch, activePage])
 
+    const categoryData = Object.values(
+        allExpenses.reduce((acc, item) => {
+            if (!acc[item.category]) {
+                acc[item.category] = {
+                    category: item.category,
+                    price: 0,
+                    categoryColor: item.categoryColor,
+                };
+            }
+            acc[item.category].price += Number(item.price);
+            return acc;
+        }, {})
+    );
+
     const columns = [
         {
             header: 'ID',
@@ -52,7 +68,12 @@ const ManageCategory = () => {
         },
         {
             header: 'Category Name',
-            accessor: 'categoryName'
+            render: (row) => (
+                <div className='flex gap-2 items-center'>
+                    <div className='w-5 h-5 rounded' style={{ background: row?.categoryColor }} />
+                    <div>{row?.categoryName}</div>
+                </div>
+            )
         },
         {
             header: 'Status',
@@ -86,6 +107,7 @@ const ManageCategory = () => {
                     />
                     <Button className="bg-brand hover:bg-brand-dark text-white capitalize ms-auto" onClick={() => handleCategoryAdd()}>Add</Button>
                 </div>
+                <ExpensesCard categoryData={categoryData} />
                 <CustomTable
                     columns={columns}
                     loading={loading}

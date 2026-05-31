@@ -11,7 +11,14 @@ createRoot(document.getElementById("root")).render(
 
   <ThemeProvider >
     <Provider store={store}>
-      <Toaster position="top-right" />
+      <div className="z-[99999] relative">
+
+        <Toaster position="top-right" toastOptions={{
+          style: {
+            zIndex: 999999,
+          },
+        }} />
+      </div>
       <App />
     </Provider>
   </ThemeProvider>

@@ -1,12 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteExpenses, fetchExpenses, getExpenses, postExpenses, updateExpenses } from "../../services/expenses";
+import { deleteExpenses, fetchAllExpenses, fetchExpenses, getExpenses, postExpenses, updateExpenses } from "../../services/expenses";
 
-export const fetchAllExpenses = createAsyncThunk('expenses/fetchAllExpenses', async ({ page, search }, { rejectWithValue }) => {
+export const fetchExpensesData = createAsyncThunk('expenses/fetchExpenses', async ({ page, search }, { rejectWithValue }) => {
     try {
         const res = await fetchExpenses(page, search)
         return { data: res.data, totalItem: res.headers['x-total-count'] }
     } catch (error) {
         return rejectWithValue("fetch failed")
+    }
+})
+export const fetchAllExpensesData = createAsyncThunk('expenses/getAllExpenses', async (_, { rejectWithValue }) => {
+    try {
+        const res = await fetchAllExpenses()
+        return res.data
+    } catch (error) {
+        rejectWithValue(error.messages || 'fetch failed')
     }
 })
 
@@ -30,6 +38,8 @@ export const postExpensesItem = createAsyncThunk('expenses/postExpensesItem', as
 
 export const updateExpensesItem = createAsyncThunk('expenses/updateExpenses', async ({ id, data }, { rejectWithValue }) => {
     try {
+        console.log(data,'hh');
+        
         const res = await updateExpenses(id, data)
         return res.data
     } catch (error) {

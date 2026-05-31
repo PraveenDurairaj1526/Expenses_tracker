@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllExpenses, getExpensesItem, postExpensesItem, updateExpensesItem, deleteExpensesItem } from "./expensesThunks";
+import { fetchExpensesData, getExpensesItem, postExpensesItem, updateExpensesItem, deleteExpensesItem, fetchAllExpensesData } from "./expensesThunks";
 import { PAGINATION_COUNT } from "../../siteConfig";
 
 const expensesSlice = createSlice({
@@ -7,6 +7,7 @@ const expensesSlice = createSlice({
     initialState: {
         loading: null,
         data: [],
+        allExpenses:[],
         error: null,
         expensesItem: null,
         modalHandlers: {
@@ -31,21 +32,27 @@ const expensesSlice = createSlice({
     },
     extraReducers: (builder) => {
 
-        // FETCH ALL ITEM
-        builder.addCase(fetchAllExpenses.pending, (state, action) => {
+        // FETCH  expenses
+        builder.addCase(fetchExpensesData.pending, (state, action) => {
             state.loading = true
         })
-            .addCase(fetchAllExpenses.fulfilled, (state, action) => {
+            .addCase(fetchExpensesData.fulfilled, (state, action) => {
                 state.loading = false
                 state.data = action.payload.data
                 state.pagination.totalItem = Number(action.payload.totalItem)
                 state.pagination.totalPages = Math.ceil(action.payload.totalItem / state.pagination.limit)
             })
-            .addCase(fetchAllExpenses.rejected, (state, action) => {
+            .addCase(fetchExpensesData.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })
-
+            // FETCH ALL EXPENSES
+            .addCase(fetchAllExpensesData.fulfilled, (state, action) => {
+                state.allExpenses = action.payload
+            })
+            .addCase(fetchAllExpensesData.rejected, (state, action) => {
+                state.error = action.payload
+            })
             // FETCH ITEM
             .addCase(getExpensesItem.fulfilled, (state, action) => {
                 state.expensesItem = action.payload

@@ -8,6 +8,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { handleCategoryModalClose } from '../categorySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCategoryItem, updateCategoryItem } from '../categoryThunks';
+import Input from '../../../components/Form/Input';
 import toast from 'react-hot-toast';
 
 const CategoryForm = () => {
@@ -54,9 +55,13 @@ const CategoryForm = () => {
             <DialogBody>
                 <form className='flex flex-col gap-3' onSubmit={handleSubmit(handleForm)}>
                     <div>
-                        <input {...register("categoryName")} placeholder="Category name"
-                            className="border border-gray-300 rounded-md px-3 py-2 w-full text-sm" />
-                        {errors?.categoryName?.message && <span className="text-red-500 text-sm">{errors?.categoryName?.message}</span>}
+                        <Input
+                            label={'Category name'}
+                            name={'categoryName'}
+                            register={register}
+                            placeholder={'Category name'}
+                            error={errors?.categoryName?.message}
+                        />
                     </div>
                     <Controller
                         name='categoryStatus'
@@ -80,6 +85,17 @@ const CategoryForm = () => {
                             </>
                         )}
                     />
+                    <div className='grid gap-1'>
+                        <label className={'text-sm font-semibold text-primary'}>Category color</label>
+                        <input
+                            type='color'
+                            name={'categoryColor'}
+                            {...register('categoryColor')}
+                            label={'Category color'}
+                            className=" w-8 h-8 p-0 border-0 bg-transparent [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-md"
+                        />
+                    </div>
+
                     <Button type='submit' className="bg-brand hover:bg-brand-dark text-white capitalize" fullWidth>{mode === "EDIT" ? 'Update' : 'Add'}</Button>
                 </form>
             </DialogBody>
